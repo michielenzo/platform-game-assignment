@@ -282,89 +282,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e616d39d8fbdf442ab20cb83f776a5c, type: 3}
---- !u!1 &534669902
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 534669905}
-  - component: {fileID: 534669904}
-  - component: {fileID: 534669903}
-  m_Layer: 0
-  m_Name: Camera
-  m_TagString: MainCamera
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!81 &534669903
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534669902}
-  m_Enabled: 1
---- !u!20 &534669904
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534669902}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: -1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!4 &534669905
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534669902}
-  m_LocalRotation: {x: 0.20577471, y: -0, z: -0, w: 0.9785994}
-  m_LocalPosition: {x: -0.12, y: 2.29, z: -3.45}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1515776416}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 23.750002, y: 0, z: 0}
 --- !u!4 &558919631 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8867430306894438984, guid: 5e616d39d8fbdf442ab20cb83f776a5c,
@@ -410,13 +327,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7919768820542439877}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1515776416 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7919768821454170213, guid: 0625125419415bd48b877d084d2c8bc5,
-    type: 3}
-  m_PrefabInstance: {fileID: 7919768820542439877}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1515776417
+--- !u!114 &1515776418
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -425,12 +336,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1515776414}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e6af1f0f8563bc419c4d794f6f393e4, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e3d451e3198fc14a9da01e9cc425662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementForceFactor: 1000
-  rotationSpeedFactor: 125
-  jumpSpeedFactor: 20000
+  bulletObj: {fileID: 6885955640127809977, guid: 3e251a8a56776554fb9d7d0754d7ff7e,
+    type: 3}
+  bulletLifeSpan: 3
+  bulletSpeed: 5000
+  bulletSpawnOffset: {x: 0, y: 0, z: 1.5}
 --- !u!4 &1634610481 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8867430306894438984, guid: 5e616d39d8fbdf442ab20cb83f776a5c,
@@ -550,16 +463,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7919768821454170202, guid: 0625125419415bd48b877d084d2c8bc5,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 7919768821454170202, guid: 0625125419415bd48b877d084d2c8bc5,
-        type: 3}
-      propertyPath: m_Drag
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7919768821454170203, guid: 0625125419415bd48b877d084d2c8bc5,
         type: 3}
       propertyPath: m_Name
