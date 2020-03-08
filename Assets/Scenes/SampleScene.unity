@@ -343,6 +343,7 @@ MonoBehaviour:
     type: 3}
   bulletLifeSpan: 3
   bulletSpeed: 5000
+  maxBullets: 3
   bulletSpawnOffset: {x: 0, y: 0, z: 1.5}
 --- !u!4 &1634610481 stripped
 Transform:
