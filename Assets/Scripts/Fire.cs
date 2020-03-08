@@ -1,27 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 public class Fire : MonoBehaviour
 {
-
     public GameObject bulletObj;
-
-    public float bulletLifeSpan;
     public float bulletSpeed;
     public int maxBullets;
-
-    public Vector3 bulletSpawnOffset;
-    
+    public float bulletLifeTime;
     private int _bulletsInWorld;
+    public float bulletSpawnOffset;
 
     private bool _fireLock;
 
-    private List<GameObject> _bullets;
-
     public void Awake()
     {
-        _bullets = new List<GameObject>();
+        _bulletsInWorld = 0;
         _fireLock = false;
     }
 
@@ -36,14 +29,26 @@ public class Fire : MonoBehaviour
         } else {
             _fireLock = false;
         }
+        
     }
 
     private void FireBullet()
     {
-        if (_bullets.Count >= maxBullets) return;
-        Vector3 direction = transform.forward.normalized;
-        GameObject bullet = Instantiate(bulletObj, transform.position + bulletSpawnOffset, Quaternion.identity);
-        _bullets.Add(bullet);
+        if (_bulletsInWorld >= maxBullets) return;
+        var transform1 = transform;
+        var forward = transform1.forward;
+        Vector3 direction = forward.normalized;
+        Vector3 offset = forward.normalized * bulletSpawnOffset;
+        GameObject bullet = Instantiate(bulletObj, transform1.position + offset, Quaternion.identity);
+        _bulletsInWorld++;
         bullet.gameObject.GetComponent<Rigidbody>().AddForce(direction * (bulletSpeed * Time.deltaTime));
+        StartCoroutine(DestroyAfterTime(bullet));
+    }
+    
+    private IEnumerator DestroyAfterTime(GameObject gameObject)
+    {
+        yield return new WaitForSeconds(bulletLifeTime);
+        Destroy(gameObject);
+        _bulletsInWorld--;
     }
 }

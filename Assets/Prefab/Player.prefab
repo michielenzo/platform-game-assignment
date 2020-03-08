@@ -373,6 +373,7 @@ GameObject:
   - component: {fileID: 7919768821454170213}
   - component: {fileID: 7919768821454170202}
   - component: {fileID: 1515776417}
+  - component: {fileID: 1515776418}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -431,6 +432,24 @@ MonoBehaviour:
   movementForceFactor: 1000
   rotationSpeedFactor: 125
   jumpSpeedFactor: 20000
+--- !u!114 &1515776418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7919768821454170203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e3d451e3198fc14a9da01e9cc425662, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletObj: {fileID: 6885955640127809977, guid: 3e251a8a56776554fb9d7d0754d7ff7e,
+    type: 3}
+  bulletSpeed: 40000
+  maxBullets: 3
+  bulletLifeTime: 3
+  bulletSpawnOffset: 1
 --- !u!1 &7919768821920480699
 GameObject:
   m_ObjectHideFlags: 0
