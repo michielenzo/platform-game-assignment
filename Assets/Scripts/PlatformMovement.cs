@@ -29,15 +29,12 @@ public class PlatformMovement : MonoBehaviour
 
     public void Update()
     {
-        Debug.Log(TooString());
-        
         Vector3 currentPosition = transform.position;
         Vector3 destination = _startingPosition + travelDirection.normalized * travelDistance;
         
         if (IsPlatformOutsideTravellingBounds(currentPosition, destination) && !_isDepartingWriteLock) {
             _isDeparting = !_isDeparting;
             _isDepartingWriteLock = true;
-            Debug.Log("here");
         } else if (!IsPlatformOutsideTravellingBounds(currentPosition, destination)){
             _isDepartingWriteLock = false;
         }
