@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HorizontalPlatform : MonoBehaviour
+public class PlatformMovement : MonoBehaviour
 {
     private Rigidbody _rigidbody;
         
@@ -53,53 +53,29 @@ public class HorizontalPlatform : MonoBehaviour
     
     private bool IsPlatformOutsideTravellingBounds(Vector3 currentPosition, Vector3 destination)
     {
-        //check for x,y,z if the destination is positive/negative relative to the destination.
+        //check for x,y,z if the destination is positive/negative relative to the startingPosition.
         bool xPositive = destination.x > _startingPosition.x;
         bool yPositive = destination.y > _startingPosition.y;
         bool zPositive = destination.z > _startingPosition.z;
 
-        //check if x,y,z are outside the travelling bounds.
-
-
-        bool xOutsideBounds;
-        if (travelDirection.x == 0) {
-            xOutsideBounds = true;
-        } else {
-            if (xPositive) {
-                xOutsideBounds = currentPosition.x > destination.x || currentPosition.x < _startingPosition.x;
-            }else {
-                xOutsideBounds = currentPosition.x < destination.x || currentPosition.x > _startingPosition.x;
-            }           
-        }
-        
-        bool yOutsideBounds;
-        if (travelDirection.y == 0) {
-            yOutsideBounds = true;
-        } else {
-            if (yPositive) {
-                yOutsideBounds = currentPosition.y > destination.y || currentPosition.y < _startingPosition.y;
-            }else {
-                yOutsideBounds = currentPosition.y < destination.y || currentPosition.y > _startingPosition.y;
-            }
-        }
-
-        bool zOutsideBounds;
-        if (travelDirection.z == 0) {
-            zOutsideBounds = true;
-        } else {
-            if (zPositive) {
-                zOutsideBounds = currentPosition.z > destination.z || currentPosition.z < _startingPosition.z;
-            } else {
-                zOutsideBounds = currentPosition.z < destination.z || currentPosition.z > _startingPosition.z;
-            }                    
-        }
-        
-        Debug.Log("xOuts: " + xOutsideBounds + " yOuts: " + yOutsideBounds + " zOuts: " + zOutsideBounds);
+        //check if x,y,z are outside the travelling bounds. 
+        bool xOutsideBounds = isAxisOutOfBounds(currentPosition.x, destination.x, _startingPosition.x, xPositive, travelDirection.x);
+        bool yOutsideBounds = isAxisOutOfBounds(currentPosition.y, destination.y, _startingPosition.y, yPositive, travelDirection.y);;
+        bool zOutsideBounds = isAxisOutOfBounds(currentPosition.z, destination.z, _startingPosition.z, zPositive, travelDirection.z);;
 
         return xOutsideBounds && yOutsideBounds && zOutsideBounds;
     }
 
-    public string TooString()
+    private static bool isAxisOutOfBounds(float currentpositionAxis, float destinationAxis, float startingPositionAxis, bool axisPositive, float travelDirection)
+    {
+        if (travelDirection == 0) return true;
+        if (axisPositive) {
+            return currentpositionAxis > destinationAxis || currentpositionAxis < startingPositionAxis;
+        }
+        return currentpositionAxis < destinationAxis || currentpositionAxis > startingPositionAxis;
+    }
+
+    private string TooString()
     {
         Vector3 destination = _startingPosition + travelDirection.normalized * travelDistance;
         string str = "";
