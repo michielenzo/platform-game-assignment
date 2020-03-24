@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90e07d39d86a44f2a47b1de111ffb8f4, type: 3}
   m_Name: EnemyConfig
   m_EditorClassIdentifier: 
-  targetLockDistance: 8
+  targetLockDistance: 12
   chaseDistance: 30
   MaxHealth: 3
   movementForceFactor: 750
