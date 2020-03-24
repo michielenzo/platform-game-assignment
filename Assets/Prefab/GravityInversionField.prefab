@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 88876781961701550}
   - component: {fileID: 88876781961701551}
   - component: {fileID: 88876781961701584}
+  - component: {fileID: 1070580546}
   m_Layer: 9
   m_Name: GravityInversionField
   m_TagString: Untagged
@@ -94,3 +95,16 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.00000005960464, y: 0, z: -0.00000008940696}
+--- !u!114 &1070580546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88876781961701586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 974fc29af11e44fe965ed2ed31a41c96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _forceMultiplier: 750
