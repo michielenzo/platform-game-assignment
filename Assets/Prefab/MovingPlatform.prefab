@@ -123,4 +123,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 911e36cb855990f44b20719e08895da1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wayPoints:
+  - {x: -30, y: 0, z: 40}
+  - {x: -30, y: 0, z: 75}
+  - {x: 0, y: 0, z: 55}
+  - {x: 0, y: 0, z: 92}
+  - {x: 0, y: 0, z: 33}
   travelForce: 250

@@ -318,8 +318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _EnemyConfig: {fileID: 11400000, guid: 3e53178bb42496b4a8993ceab96cf55e, type: 2}
-  playerObject: {fileID: 7919768821454170203, guid: 0625125419415bd48b877d084d2c8bc5,
-    type: 3}
+  playerObject: {fileID: 0}
   gravityInversionFieldReference: {fileID: 88876781961701586, guid: 8e4486e5688ad2542aa1c5db140ba514,
     type: 3}
   _summoningReloadTime: 20

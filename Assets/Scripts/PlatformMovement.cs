@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlatformMovement : MonoBehaviour
 {
     private Rigidbody _rigidbody;
-    private Vector3[] _wayPoints;
+    public Vector3[] wayPoints;
     private int _currentWayPointIndex;
     private Vector3 _directionTowardsNextWayPoint;
     private bool _platformStopped;
@@ -20,13 +20,6 @@ public class PlatformMovement : MonoBehaviour
         _currentWayPointIndex = 0;
         _platformStopped = false;
         _wayPointPausInSeconds = 4;
-        _wayPoints = new[] {
-            new Vector3(-30, 0 ,40), 
-            new Vector3(-30, 0 ,75), 
-            new Vector3(0, 0 ,55), 
-            new Vector3(-0, 0 ,75), 
-            new Vector3(-0, 0 ,33), 
-        };
     }
 
     public void Start()
@@ -36,6 +29,7 @@ public class PlatformMovement : MonoBehaviour
 
     public void Update()
     {
+        Debug.Log(TooString());
         if (PlatformHasReachedWaypoint() && !_platformStopped) StartCoroutine(WayPointMovementPause());
     }
 
@@ -51,13 +45,13 @@ public class PlatformMovement : MonoBehaviour
 
     private bool PlatformHasReachedWaypoint()
     {
-        return Vector3.Distance(transform.position, _wayPoints[_currentWayPointIndex]) <= 1f;
+        return Vector3.Distance(transform.position, wayPoints[_currentWayPointIndex]) <= 1f;
     }
 
     private void OrderPlatformTowardsNextWayPoint()
     {
         _currentWayPointIndex++;
-        if (_currentWayPointIndex > _wayPoints.Length - 1) _currentWayPointIndex = 0;
+        if (_currentWayPointIndex > wayPoints.Length - 1) _currentWayPointIndex = 0;
         CalculateDirectionTowardsNextWayPoint();
     }
 
@@ -74,7 +68,7 @@ public class PlatformMovement : MonoBehaviour
 
     private void CalculateDirectionTowardsNextWayPoint()
     {
-        _directionTowardsNextWayPoint = (_wayPoints[_currentWayPointIndex] - transform.position).normalized;
+        _directionTowardsNextWayPoint = (wayPoints[_currentWayPointIndex] - transform.position).normalized;
     }
 
     private IEnumerator WayPointMovementPause()
@@ -90,8 +84,8 @@ public class PlatformMovement : MonoBehaviour
         string str = "_currentWayPointIndex: " + _currentWayPointIndex + "\n";
         str += "_directionTowardsnextWaypoint: " + _directionTowardsNextWayPoint + "\n";
         str += "wayPoints: \n";
-        for (int i = 0; i < _wayPoints.Length; i++) {
-            str += "Index: " + i + " Value: " + _wayPoints[i] + "\n";
+        for (int i = 0; i < wayPoints.Length; i++) {
+            str += "Index: " + i + " Value: " + wayPoints[i] + "\n";
         } 
         return str;
     }
