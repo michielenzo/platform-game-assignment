@@ -6,83 +6,93 @@ using UnityEngine;
 public class PlatformMovement : MonoBehaviour
 {
     private Rigidbody _rigidbody;
-        
-    public float travelDistance;
-    public Vector3 travelDirection;
-    private Vector3 _startingPosition;
+    private Vector3[] _wayPoints;
+    private int _currentWayPointIndex;
+    private Vector3 _directionTowardsNextWayPoint;
+    private bool _platformStopped;
+    private float _wayPointPausInSeconds;
+    
     public float travelForce;
 
-    private bool _isDeparting;
-    private bool _isDepartingWriteLock;
-    
     public void Awake()
     {
-        _isDeparting = true;
-        _isDepartingWriteLock = true;
         _rigidbody = GetComponent<Rigidbody>();
+        _currentWayPointIndex = 0;
+        _platformStopped = false;
+        _wayPointPausInSeconds = 4;
+        _wayPoints = new[] {
+            new Vector3(-30, 0 ,40), 
+            new Vector3(-30, 0 ,75), 
+            new Vector3(0, 0 ,55), 
+            new Vector3(-0, 0 ,75), 
+            new Vector3(-0, 0 ,33), 
+        };
     }
 
     public void Start()
     {
-        _startingPosition = transform.position;
+        CalculateDirectionTowardsNextWayPoint();
     }
 
     public void Update()
     {
-        Vector3 currentPosition = transform.position;
-        Vector3 destination = _startingPosition + travelDirection.normalized * travelDistance;
-        
-        if (IsPlatformOutsideTravellingBounds(currentPosition, destination) && !_isDepartingWriteLock) {
-            _isDeparting = !_isDeparting;
-            _isDepartingWriteLock = true;
-        } else if (!IsPlatformOutsideTravellingBounds(currentPosition, destination)){
-            _isDepartingWriteLock = false;
-        }
+        if (PlatformHasReachedWaypoint() && !_platformStopped) StartCoroutine(WayPointMovementPause());
     }
 
     public void FixedUpdate()
     {
-        Vector3 travellingForce = _isDeparting ?
-            travelDirection.normalized * (travelForce * Time.deltaTime):
-            -travelDirection.normalized * (travelForce * Time.deltaTime);
-        _rigidbody.AddForce(travellingForce);
-    }
-    
-    private bool IsPlatformOutsideTravellingBounds(Vector3 currentPosition, Vector3 destination)
-    {
-        //check for x,y,z if the destination is positive/negative relative to the startingPosition.
-        bool xPositive = destination.x > _startingPosition.x;
-        bool yPositive = destination.y > _startingPosition.y;
-        bool zPositive = destination.z > _startingPosition.z;
-
-        //check if x,y,z are outside the travelling bounds. 
-        bool xOutsideBounds = isAxisOutOfBounds(currentPosition.x, destination.x, _startingPosition.x, xPositive, travelDirection.x);
-        bool yOutsideBounds = isAxisOutOfBounds(currentPosition.y, destination.y, _startingPosition.y, yPositive, travelDirection.y);;
-        bool zOutsideBounds = isAxisOutOfBounds(currentPosition.z, destination.z, _startingPosition.z, zPositive, travelDirection.z);;
-
-        return xOutsideBounds && yOutsideBounds && zOutsideBounds;
+        if (!_platformStopped) MoveTowardsWayPoint();
     }
 
-    private static bool isAxisOutOfBounds(float currentpositionAxis, float destinationAxis, float startingPositionAxis, bool axisPositive, float travelDirection)
+    private void MoveTowardsWayPoint()
     {
-        if (travelDirection == 0) return true;
-        if (axisPositive) {
-            return currentpositionAxis > destinationAxis || currentpositionAxis < startingPositionAxis;
-        }
-        return currentpositionAxis < destinationAxis || currentpositionAxis > startingPositionAxis;
+        _rigidbody.velocity = _directionTowardsNextWayPoint * (travelForce * Time.deltaTime);
+    }
+
+    private bool PlatformHasReachedWaypoint()
+    {
+        return Vector3.Distance(transform.position, _wayPoints[_currentWayPointIndex]) <= 1f;
+    }
+
+    private void OrderPlatformTowardsNextWayPoint()
+    {
+        _currentWayPointIndex++;
+        if (_currentWayPointIndex > _wayPoints.Length - 1) _currentWayPointIndex = 0;
+        CalculateDirectionTowardsNextWayPoint();
+    }
+
+    private void StopPlatformMovement()
+    {
+        _rigidbody.velocity = Vector3.zero;
+        _platformStopped = true;
+    }
+
+    private void ContinuePlatformMovement()
+    {
+        _platformStopped = false;
+    }
+
+    private void CalculateDirectionTowardsNextWayPoint()
+    {
+        _directionTowardsNextWayPoint = (_wayPoints[_currentWayPointIndex] - transform.position).normalized;
+    }
+
+    private IEnumerator WayPointMovementPause()
+    {
+        StopPlatformMovement();
+        yield return new WaitForSeconds(_wayPointPausInSeconds);
+        OrderPlatformTowardsNextWayPoint(); 
+        ContinuePlatformMovement();
     }
 
     private string TooString()
     {
-        Vector3 destination = _startingPosition + travelDirection.normalized * travelDistance;
-        string str = "";
-        str += "travelDistance: " + travelDistance;
-        str += " travelDirection: " + travelDirection;
-        str += " _startingPosition: " + _startingPosition;
-        str += " destination: " + destination;
-        str += " travelForce: " + travelForce;
-        str += " _isDeparting: " + _isDeparting;
-        str += " _isDepartingWriteLock: " + _isDepartingWriteLock;
+        string str = "_currentWayPointIndex: " + _currentWayPointIndex + "\n";
+        str += "_directionTowardsnextWaypoint: " + _directionTowardsNextWayPoint + "\n";
+        str += "wayPoints: \n";
+        for (int i = 0; i < _wayPoints.Length; i++) {
+            str += "Index: " + i + " Value: " + _wayPoints[i] + "\n";
+        } 
         return str;
     }
 }
