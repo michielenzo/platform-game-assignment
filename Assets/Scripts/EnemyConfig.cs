@@ -8,4 +8,5 @@ public class EnemyConfig : ScriptableObject
     public float chaseDistance;
     public int MaxHealth;
     public float movementForceFactor;
+    public float gravityInversionFieldDuration;
 }

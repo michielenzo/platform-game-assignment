@@ -14,8 +14,6 @@ public class EnemyController : MonoBehaviour
     private Rigidbody _rigidBody;
 
     private bool _summonGravityInversionFieldLock;
-    public int _summoningReloadTime;
-    public int gravityInversionFieldLifetime;
 
     public int currentHealth { get; set; }
 
@@ -111,13 +109,13 @@ public class EnemyController : MonoBehaviour
     
     private IEnumerator SummonLockResetTimer()
     {
-        yield return new WaitForSeconds(_summoningReloadTime);
+        yield return new WaitForSeconds(_EnemyConfig.gravityInversionFieldDuration);
         _summonGravityInversionFieldLock = false;
     }
     
     private IEnumerator DestroyAfterTime(Object gameObject)
     {
-        yield return new WaitForSeconds(gravityInversionFieldLifetime);
+        yield return new WaitForSeconds(_EnemyConfig.gravityInversionFieldDuration);
         Destroy(gameObject);
     }
 }

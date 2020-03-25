@@ -29,7 +29,6 @@ public class PlatformMovement : MonoBehaviour
 
     public void Update()
     {
-        Debug.Log(TooString());
         if (PlatformHasReachedWaypoint() && !_platformStopped) StartCoroutine(WayPointMovementPause());
     }
 
