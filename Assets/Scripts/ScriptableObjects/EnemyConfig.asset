@@ -16,3 +16,4 @@ MonoBehaviour:
   chaseDistance: 30
   MaxHealth: 3
   movementForceFactor: 700
+  gravityInversionFieldDuration: 15
