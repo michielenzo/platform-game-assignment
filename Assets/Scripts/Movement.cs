@@ -44,7 +44,7 @@ public class Movement : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.collider.CompareTag("jumpReset"))
+        if (other.collider.CompareTag("Surface"))
         {
             _jumpLock = false;
         }
