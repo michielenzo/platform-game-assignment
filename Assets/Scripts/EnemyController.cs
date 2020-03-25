@@ -53,16 +53,15 @@ public class EnemyController : MonoBehaviour
         RotateTowardsPlayer();
         MoveTowardsPlayer();
 
-        if (IsPlayerInSummoningRange()) {
-            currentState = States.Summoning;
-        }
+        if (IsPlayerInSummoningRange()) currentState = States.Summoning;
+        if (!IsPlayerInChasingRange()) currentState = States.Idle;
     }
 
     private void Summoning()
     {
+        _rigidBody.velocity = Vector3.zero;
         if(!_summonGravityInversionFieldLock) SummonGravityInversionField();
         if (!IsPlayerInSummoningRange()) currentState = States.Chasing;
-
     }
 
     private void SummonGravityInversionField()
