@@ -35,6 +35,7 @@ public class PlatformMovement : MonoBehaviour
     public void FixedUpdate()
     {
         if (!_platformStopped) MoveTowardsWayPoint();
+        else _rigidbody.velocity = Vector3.zero;
     }
 
     private void MoveTowardsWayPoint()
@@ -56,7 +57,6 @@ public class PlatformMovement : MonoBehaviour
 
     private void StopPlatformMovement()
     {
-        _rigidbody.velocity = Vector3.zero;
         _platformStopped = true;
     }
 
